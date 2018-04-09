@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="/main/index.xhtml">
+        <ui:define name="title">Editando produto</ui:define>
+        <ui:define name="dados">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green"
+                            layout="table" />
+            </h:panelGroup>
+            <h:form id="produto">
+                <h:panelGrid columns="2">
+                    <f:facet name="header">
+                        <h2>Editando Produto</h2>
+                    </f:facet>
+                    <h:outputText value="Id:" />
+                    <h:inputText id="id" value="#{produtoController.produto.id}" readonly="#{facesContext.renderResponse}" title="Id" />
+
+                    <h:outputLabel value="Nome:" for="nome"/>
+                    <h:inputText id="nome" value="#{produtoController.produto.nome}" size="40"
+                                 maxlength="255" required="true"/>
+
+                    <h:outputLabel value="Marca:" for="marca"/>
+                    <h:inputText id="marca" value="#{produtoController.produto.marca}" size="40"
+                                 maxlength="50" required="true"/>
+                    <h:outputLabel value="Categoria:" for="categoria"/>
+                    <h:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}">
+                        <f:selectItems value="#{produtoController.categorias}" var="categoria" 
+                                       itemLabel="#{categoria.descricao}" itemValue="#{categoria}"/>
+                    </h:selectOneMenu>
+                    <h:outputText value="Preco:"/>
+                    <h:inputText id="preco" value="#{produtoController.produto.preco}" size="20"
+                                 maxlength="20"/>
+                    <h:outputLabel value="Status:" for="status"/>
+                    <h:panelGroup>
+                        <h:selectBooleanCheckbox id="status"
+                                                 value="#{produtoController.produto.ativo}"/>
+                        <h:outputText value="Ativo"/>
+                    </h:panelGroup>
+                    <h:outputLabel value="Tipo de Produto:" for="tipo"/>
+                    <h:selectOneRadio id="tipo" value="#{produtoController.tipo}"
+                                      immediate="true"
+                                      valueChangeListener="#{produtoController.atualizarTipoProduto}">
+                        <f:ajax event="change" render="dadosProduto"/>
+                        <f:selectItems value="#{produtoController.tipos}"/>
+                    </h:selectOneRadio>
+                    <h:outputLabel value=""/>
+
+                    <h:panelGroup id="dadosProduto">
+                        <h:outputLabel value="Taxa de Entrega:" for="taxa"
+                                       rendered="#{produtoController.produtoMaterial}"/>
+                        <h:inputText id="taxa" value="#{produtoController.produto.taxaEntrega}"
+                                     size="20" maxlength="20"
+                                     rendered="#{produtoController.produtoMaterial}"/>
+                        <h:outputText value="" rendered="#{produtoController.produtoMaterial}"/>
+
+                        <h:outputLabel value="Nome do Arquivo:" for="nomeArquivo"
+                                       rendered="#{not produtoController.produtoMaterial}"/>
+                        <h:inputText id="nomeArquivo" value="#{produtoController.produto.nomeArquivo}"
+                                     size="40" maxlength="255"
+                                     rendered="#{not produtoController.produtoMaterial}"/>
+                        <h:outputText value="" rendered="#{not produtoController.produtoMaterial}"/>
+
+                        <h:outputLabel value="Tamanho:" for="tamanho"
+                                       rendered="#{not produtoController.produtoMaterial}"/>
+                        <h:inputText id="tamanho" value="#{produtoController.produto.tamanho}" size="10"
+                                     maxlength="10"
+                                     rendered="#{not produtoController.produtoMaterial}"/>
+                        <h:outputText value="" rendered="#{not produtoController.produtoMaterial}"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid columns="1">
+                    <h:commandButton action="#{produtoController.salvar}"
+                                     value="Salvar" />
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

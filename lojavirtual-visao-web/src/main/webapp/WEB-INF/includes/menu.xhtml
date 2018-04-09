@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:form>
+        <rich:toolbar width="1000px">
+            <rich:dropDownMenu label="Categorias">
+                <rich:menuItem action="/categoria/List" label="Listar Categorias" />
+                <rich:menuItem action="#{categoriaController.setup}" label="Nova Categoria" />
+            </rich:dropDownMenu>
+            <rich:dropDownMenu label="Clientes">
+                <rich:menuItem action="/cliente/List" label="Listar Clientes" />
+                <rich:menuItem action="#{clienteController.setup}" label="Novo Cliente" />
+            </rich:dropDownMenu>
+            <rich:dropDownMenu label="Produtos">
+                <rich:menuItem action="/produto/List" label="Listar Produtos" />
+                <rich:menuItem action="#{produtoController.setup}" label="Novo Produto" />
+            </rich:dropDownMenu>
+            <rich:dropDownMenu label="Pedidos">
+                <rich:menuItem action="/pedido/List" label="Listar Pedidos" />
+            </rich:dropDownMenu>
+            <rich:dropDownMenu label="Compras">
+                <rich:menuItem action="/compra/catalogoProdutos" label="Listar Catalogo de Produtos" />
+            </rich:dropDownMenu>
+
+        </rich:toolbar>
+    </h:form>
+</ui:composition>

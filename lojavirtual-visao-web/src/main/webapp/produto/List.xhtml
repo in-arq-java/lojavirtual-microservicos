@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/main/index.xhtml">
+        <ui:define name="title">Lista de Produtos</ui:define>
+        <ui:define name="dados">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green"
+                            layout="table" />
+            </h:panelGroup>
+            <h:form>
+                <rich:dataTable id="tabelaProdutos" rows="10" 
+                                value="#{produtoController.produtos}" var="produto"
+                                rowClasses="jsfcrud_odd_row,jsfcrud_even_row"
+                                style="border:solid 1px">
+                    <f:facet name="header">
+                        <h2>Lista de Produtos</h2>
+                    </f:facet>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="Id" />
+                        </f:facet>
+                        <h:outputText value="#{produto.id}" />
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nome"/>
+                        </f:facet>
+                        <h:outputText value="#{produto.nome}"/>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="Categoria"/>
+                        </f:facet>
+                        <h:outputText value="#{produto.categoria.descricao}"/>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="Preço"/>
+                        </f:facet>
+                        <h:outputText value="#{produto.preco}">
+                            <f:convertNumber locale="pt_br" minFractionDigits="2" maxFractionDigits="2" groupingUsed="true"/>
+                        </h:outputText>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="Marca"/>
+                        </f:facet>
+                        <h:outputText value="#{produto.marca}"/>
+                    </rich:column>
+
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText escape="false" value="&nbsp;" />
+                        </f:facet>
+                        <h:outputText value=" " />
+                        <h:commandLink value="Ver" action="#{produtoController.verDetalhes(produto)}" />
+                        <h:outputText value=" " />
+                        <h:commandLink value="Remover" action="#{produtoController.remover(produto)}" />
+                    </rich:column>
+
+
+                    <f:facet name="footer">
+                        <rich:dataScroller/>
+                    </f:facet>
+                </rich:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

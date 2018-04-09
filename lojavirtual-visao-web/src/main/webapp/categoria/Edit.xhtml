@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="/main/index.xhtml">
+        <ui:define name="title">Editando categoria</ui:define>
+        <ui:define name="dados">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green"
+                            layout="table" />
+            </h:panelGroup>
+            <h:form id="categoria">
+                <h:panelGrid columns="2">
+                    <f:facet name="header">
+                        <h2>Editando Categoria</h2>
+                    </f:facet>
+                    <h:outputText value="Id:" />
+                    <h:inputText id="id" value="#{categoriaController.categoria.id}" readonly="#{facesContext.renderResponse}" title="Id" />
+
+                    <h:outputLabel value="Descricao:" for="descricao"/>
+                    <h:inputText id="descricao" value="#{categoriaController.categoria.descricao}" size="40"
+                                 maxlength="255" required="true"/>
+
+                    <h:outputLabel value="Status:" for="status"/>
+                    <h:panelGroup>
+                        <h:selectBooleanCheckbox id="status"
+                                                 value="#{categoriaController.categoria.ativo}"/>
+                        <h:outputText value="Ativo"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid columns="1">
+                    <h:commandButton action="#{categoriaController.salvar}"
+                                     value="Salvar" />
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

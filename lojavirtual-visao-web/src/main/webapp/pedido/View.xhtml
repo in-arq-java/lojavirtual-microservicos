@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/main/index.xhtml">
+        <ui:define name="title">Visualizar Pedido</ui:define>
+        <ui:define name="dados">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green"
+                            layout="table" />
+            </h:panelGroup>
+            <h:form prependId="false">
+                <rich:panel header="Informacoes do pedido">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Numero:" for="numeroPedido"/>
+                        <h:outputText id="numeroPedido"
+                                      value="#{pedidoController.pedido.numero}"/>
+                        <h:outputLabel value="Data:" for="dataPedido"/>
+                        <h:outputText id="dataPedido"
+                                      value="#{pedidoController.pedido.data}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                        <h:outputLabel value="Status:" for="statusPedido"/>
+                        <h:outputText id="statusPedido"
+                                      value="#{pedidoController.pedido.status}" />
+                    </h:panelGrid>
+                </rich:panel>
+
+                <rich:dataTable id="tabelaprodutos" rows="10" 
+                                value="#{pedidoController.pedido.itensPedido}" var="item" 
+                                rowClasses="jsfcrud_odd_row,jsfcrud_even_row" 
+                                style="border:solid 1px">
+                    <f:facet name="header">
+                        <h2>Itens do Pedido</h2>
+                    </f:facet>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nome"/>
+                        </f:facet>
+                        <h:outputText value="#{item.produto.nome}"/>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="Categoria"/>
+                        </f:facet>
+                        <h:outputText value="#{item.produto.categoria.descricao}"/>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="Marca"/>
+                        </f:facet>
+                        <h:outputText value="#{item.produto.marca}"/>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="Quantidade"/>
+                        </f:facet>
+                        <h:outputText value="#{item.quantidade}"/>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">
+                            <h:outputText value="Preco"/>
+                        </f:facet>
+                        <h:outputText value="#{item.produto.preco}">
+                            <f:convertNumber locale="pt_br" minFractionDigits="2" maxFractionDigits="2" groupingUsed="true"/>
+                        </h:outputText>
+                    </rich:column>
+                </rich:dataTable>
+
+                <rich:panel header="Cadastro do Cliente">
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel value="Nome" for="nome"/>
+                        <h:outputText id="nome" value="#{pedidoController.pedido.cliente.nome}"/>
+
+                        <h:outputLabel value="Telefone" for="telefone"/>
+                        <h:panelGrid columns="3">
+                            <h:outputText id="telefone"
+                                          value="#{pedidoController.pedido.cliente.telefone}"/>
+                            <h:outputLabel value="e-mail" for="email"/>
+                            <h:outputText id="email" value="#{pedidoController.pedido.cliente.email}"/>
+                        </h:panelGrid>
+
+                        <h:outputLabel value=" Rua" for="rua"/>
+                        <h:panelGrid columns="3">
+                            <h:outputText id="rua"
+                                          value="#{pedidoController.pedido.cliente.enderecoRua}" />
+                            <h:outputLabel value=" Numero" for="numero"/>
+                            <h:outputText id="numero"
+                                          value="#{pedidoController.pedido.cliente.enderecoNumero}"/>
+                        </h:panelGrid>
+
+                        <h:outputLabel value="Bairro" for="bairro"/>
+                        <h:panelGrid columns="3">
+                            <h:outputText id="bairro"
+                                          value="#{pedidoController.pedido.cliente.enderecoBairro}"/>
+                            <h:outputLabel value="Cep" for="cep"/>
+                            <h:outputText id="cep"
+                                          value="#{pedidoController.pedido.cliente.enderecoCep}"/>
+                        </h:panelGrid>
+
+                        <h:outputLabel value="Cidade" for="cidade"/>
+                        <h:panelGrid columns="3">
+                            <h:outputText id="cidade"
+                                          value="#{pedidoController.pedido.cliente.enderecoCidade}"/>
+                            <h:outputLabel value="Estado" for="estado"/>
+                            <h:outputText id="estado"
+                                          value="#{pedidoController.pedido.cliente.enderecoEstado}"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </rich:panel>
+
+                <rich:panel header="Dados do pagamento">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Forma de pagamento:"/>
+                        <h:outputText value="boleto" 
+                                      rendered="#{pedidoController.boleto}"/>
+                        <h:outputText value="cartão de crédito" escape="false" 
+                                      rendered="#{not pedidoController.boleto}"/>
+                    </h:panelGrid>
+
+
+                    <h:panelGrid columns="1"
+                                 rendered="#{pedidoController.boleto}">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Banco:" for="banco"/>
+                            <h:outputText id="banco" 
+                                          value="#{pedidoController.pedido.pagamento.banco.nome}"/>
+                            <h:outputLabel for="cedente" value="Cedente"/>
+                            <h:outputText id="cedente"
+                                          value="#{pedidoController.pedido.pagamento.cedente}"/>
+                            <h:outputLabel for="sacado" value="Sacado"/>
+                            <h:outputText id="sacado" 
+                                          value="#{pedidoController.pedido.pagamento.sacado}"/>
+                            <h:outputLabel for="codigoBarras" value="Codigo de Barras"/>
+                            <h:panelGrid columns="3">
+                                <h:outputText id="codigoBarras" 
+                                              value="#{pedidoController.pedido.pagamento.numeroCodigoBarras}"/>
+                                <h:outputLabel for="vencimento" value="Vencimento"/>
+                                <h:outputText id="vencimento" 
+                                              value="#{pedidoController.pedido.pagamento.dataVencimento}">
+                                    <f:convertDateTime pattern="dd/MM/yy"/>
+                                </h:outputText>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="1"
+                                 rendered="#{not pedidoController.boleto}">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Bandeira:" for="bandeira"/>
+                            <h:outputText id="bandeira" 
+                                          value="#{pedidoController.pedido.pagamento.bandeiraCartaoCredito.nome}"/>
+                            <h:outputText value="Numero do Cartao de Credito" />
+                            <h:outputText id="numeroCC" 
+                                          value="#{pedidoController.pedido.pagamento.numeroCartao}"/>
+                            <h:outputText value="Codigo de Verificacao"/>
+                            <h:outputText id="codigoVerificacao" 
+                                          value="#{pedidoController.pedido.pagamento.numeroConfirmacao}"/>
+                            <h:outputLabel for="titular" value="Titular"/>
+                            <h:outputText id="titular" 
+                                          value="#{pedidoController.pedido.pagamento.nomeTitular}"/>
+                            <h:outputLabel for="validade" value="Validade"/>
+                            <h:panelGroup>
+                                <h:outputText id="validade" 
+                                              value="#{pedidoController.pedido.pagamento.dataValidadeCartao}">
+                                    <f:convertDateTime pattern="MM/yy"/>
+                                </h:outputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </rich:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

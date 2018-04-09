@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <persistence-unit name="ecommercePU" transaction-type="JTA">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:app/aw</jta-data-source>
+        <class>br.nom.penha.bruno.arquiteto.model.Cliente</class>
+        <class>br.nom.penha.bruno.arquiteto.model.Pagamento</class>
+        <class>br.nom.penha.bruno.arquiteto.model.PagamentoBoleto</class>
+        <class>br.nom.penha.bruno.arquiteto.model.PagamentoCartaoCredito</class>
+        <class>br.nom.penha.bruno.arquiteto.model.Categoria</class>
+        <class>br.nom.penha.bruno.arquiteto.model.ItemCompra</class>
+        <class>br.nom.penha.bruno.arquiteto.model.Pedido</class>
+        <class>br.nom.penha.bruno.arquiteto.model.Produto</class>
+        <class>br.nom.penha.bruno.arquiteto.model.ProdutoDigital</class>
+        <class>br.nom.penha.bruno.arquiteto.model.ProdutoMaterial</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>    
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+      
+            <!-- habilita exibir os comandos SQL executados -->
+            <property name="hibernate.show_sql" value="true"/>
+      
+            <!-- habilita o uso de cache de segundo nivel com EhCache -->
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory" />
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+      
+            <!-- habilita o cache para consultas -->
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+      
+            <!-- necessario para compatibilidade entre Hibernate 4.3.x e Glassfish 4 -->
+            <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
+            
+        </properties>
+    </persistence-unit>
+</persistence>
